@@ -1,0 +1,121 @@
+{% extends 'classroom/base.html' %}
+{% load static %}
+
+{% block page %}
+Home
+{% endblock page %}
+
+{% block content %}
+<section>
+  <div class="row my-5">
+    <div class="col">
+      {% if user.is_authenticated %}
+      <h1>Welcome {{user.username}}</h1>
+      {% else %}
+      <h1 style="margin-top: 20px;" data-aos="fade-up" data-aos-delay="10" data-aos-duration="600">WELCOME CLASS</h1>
+      {% endif %}
+      <p style="font-size: 17px;" data-aos="fade-up" data-aos-delay="20" data-aos-duration="800">
+        <br> Classroom Management System deals with the maintenance of student and teachers information with in the
+        institute.
+        It is an automation system, which is used to store the student's information, course-track, assignment,
+        notice-updates.
+      </p>
+      <p style="font-size: 17px;" data-aos="fade-up" data-aos-delay="30" data-aos-duration="1000"> Classroom Management
+        System deals with the maintenance of student and teachers information with in the institute. </p>
+      <p style="font-size: 17px;" data-aos="fade-up" data-aos-delay="40" data-aos-duration="1200">Teachers can analyze
+        classroom tasks in precise detail determined the procedures and
+        expectations required for students to be successful.
+      </p>
+      <div style=" margin-top: 40px;" data-aos="fade-up" data-aos-delay="50" data-aos-duration="1500">
+        <a href="{% url 'classroom:StudentSignUp' %}" class="btn_css">JOIN NOW</a>
+      </div>
+
+    </div>
+    <div class="col" data-aos="fade-up">
+      <div class="img-bx">
+        <img src="../static/images/class.svg" alt="" srcset="">
+      </div>
+
+    </div>
+  </div>
+</section>
+<section class="about">
+  <div class="row">
+    <div class="col" data-aos="fade-right">
+      <div class="img-bx">
+        <img src="../static/images/about_img.svg" alt="">
+      </div>
+    </div>
+    <div class="col" data-aos="fade-left">
+      <h4>About Us</h4>
+      <p style="font-size: 19px;">ClassRoom Management System is a student-teacher portal with various classroom
+        features like uploading assignments, submissions, Class Notice and many more. </p>
+      <p style="font-size: 19px;">Students and Teacher can login in the portal and can experience interactive classroom
+        experience online. One of the most powerful features of class manager is its student managing abilities.</p>
+      <p style="font-size: 19px;">Teacher can easily manage their students and keep them updated about all of the
+        activities in class.</p>
+
+    </div>
+  </div>
+</section>
+
+
+<div class="footer">
+  <div class="section">
+    <div class="logo">
+      <h2>ClassRoom<span>.</span></h2>
+      <p><b>our motive is to simlify the learning proccess.</b></p>
+      <div style="margin-top: 50px;">
+        <a href="{% url 'classroom:StudentSignUp' %}" class="btn_css">Join Now</a>
+      </div>
+    </div>
+  </div>
+  <div class="section">
+    <div class="subtitle">
+      <h4>QUICK LINKS</h4>
+    </div>
+    <ul>
+      <li><a href="/">Home</a></li>
+      <li><a href="{% url 'classroom:StudentSignUp' %}">ClassRoom</a></li>
+      <li><a href="/contact/">Contact</a></li>
+      <li><a href="/about/">About</a></li>
+
+    </ul>
+  </div>
+  <div class="section">
+    <div class="subtitle">
+      <h4>FOLLOW ON</h4>
+    </div>
+    <ul>
+      <li><a href="https://wa.me/918000407813" target="_blank"><i class="fa-brands fa-whatsapp"></i></i>
+          <span>Whatsapp</span></a></li>
+      <li><a href="https://www.instagram.com/sagar__1829/?hl=en" target="_blank"><i class="fa-brands fa-instagram"></i>
+          <span>Instagram </span></a></li>
+      <li><a href="https://www.facebook.com/sagar chaudhari/" target="_blank"><i
+            class="fa-brands fa-facebook"></i><span> Facebook</span> </a></li>
+      <li><a href="https://www.linkedin.com/in/sagar-chaudhari-374473244" target="_blank"><i
+            class="fa-brands fa-linkedin"></i><span> Linkedin</span></a></li>
+      <li><a href="https://www.youtube.com/channel/UCQhUXWtYopfp0UIJl19BHKQ" target="_blank"><i
+            class="fa-brands fa-youtube"></i><span>YouTube</span></a></li>
+
+    </ul>
+  </div>
+  <div class="section">
+    <div class="subtitle">
+      <h4>CONTACT US</h4>
+    </div>
+    <ul>
+      <li><a href="mailto:sagarchaudhari7172@gmail.com"><i
+            class="fa-solid fa-envelope"></i>sagarchaudhari7172@gmail.com</a></li>
+      <li><a href="tel:+918000407813"><i class="fa-solid fa-phone"></i> +91 8000407813</a></li>
+    </ul>
+  </div>
+
+</div>
+
+<div class="copyright">
+  &nbsp;
+  <p><b><a href="mailto:sagarchaudhari7172@gmail.com"></a>&copy; ClassRoom
+      2022 | Made with ❤️ by Sagar </b></p>
+</div>
+{% endblock content %}

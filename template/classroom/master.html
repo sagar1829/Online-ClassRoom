@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  {% load static %}
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.rtl.min.css"
+    integrity="sha384-+4j30LffJ4tgIMrq9CwHvn0NjEvmuDCOfk6Rpg2xg7zgOxWWtLtozDEEVvBPgHqE" crossorigin="anonymous">
+  <!-- mycss -->
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <title>{% block page %} {% endblock page %} | Class Management</title>
+
+  <!-- font awesome -->
+  <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+    integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
+
+  <!-- font-aweome 2 -->
+  <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+    integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+    integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+</head>
+
+<body>
+  <nav class="navbar navbar-expand-lg bg-light">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="/">
+        <div class="logo">
+          <h2 style="font-weight: 700; color:#333; font-size:28px">ClassRoom<span style="color:red;">.</span></h2>
+          <h6 style="color:#333; font-size:12px "> Solution for online learning</h6>
+        </div>
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
+        aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavDropdown">
+
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="/">Home</a>
+          </li>
+          &nbsp;
+          <li class="nav-item">
+            <a class="nav-link" href="/class">Class</a>
+          </li>
+          &nbsp;
+          <li class="nav-item">
+            <a class="nav-link" href="#">Stream</a>
+          </li>
+
+
+
+        </ul>
+      </div>
+      <div>
+        <ul class="navbar-nav">
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              {% if user.is_authenticated %}
+              {{user.first_name}}
+              {% else %}
+              SignIn
+              {% endif %}
+            </a>
+            <ul class="dropdown-menu">
+              {% if user.is_authenticated %}
+              {% if user.is_superuser %}
+              <li><a class="dropdown-item" href="/admin/">Admin</a></li>
+              {% endif %}
+              <li><a class="dropdown-item" href="/userprofile/">Profile</a></li>
+              <li><a class="dropdown-item" href="/logout/">Course</a></li>
+              <li><a class="dropdown-item" href="/logout/">Assignemnt</a></li>
+              <li>
+                <hr class="dropdown-divider">
+              </li>
+              <li><a class="dropdown-item" href="/logout/">Logout</a></li>
+              {% else %}
+              <li><a class="dropdown-item" href="{% url 'classroom:signup' %}">SIGNUP</a></li>
+              <li><a class="dropdown-item" href="{% url 'classroom:login' %}">SIGNIN</a></li>
+              {% endif %}
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  {% if messages %}
+  {% for ms in messages %}
+  <div class="alert alert-{{ms.tags}} alert-dismissible fade show" role="alert">
+    <strong>{{ms}}!</strong>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+  {% endfor %}
+  {% endif %}
+
+  {% block content %}{% endblock content %}
+
+  <div class="footer">
+    <div class="section">
+      <div class="logo">
+        <h2>ClassRoom<span>.</span></h2>
+        <p>Our motive is to simlify the learning proccess<br> Join Us Now </p>
+        <div style="margin-top: 50px;">
+          <a href="/signup/" class="btn_css">Join Now</a>
+        </div>
+      </div>
+    </div>
+    <div class="section">
+      <div class="subtitle">
+        <h4>QUICK LINKS</h4>
+      </div>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="/classroom/">ClassRoom</a></li>
+        <li><a href="/contact/">Contact</a></li>
+        <li><a href="/about/">About</a></li>
+
+      </ul>
+    </div>
+    <div class="section">
+      <div class="subtitle">
+        <h4>FOLLOW ON</h4>
+      </div>
+      <ul>
+        <li><a href="https://wa.me/918000407813" target="_blank"><i class="fa-brands fa-whatsapp"></i></i>
+            <span>Whatsapp</span></a></li>
+        <li><a href="https://www.instagram.com/sagar__1829/?hl=en" target="_blank"><i
+              class="fa-brands fa-instagram"></i> <span>Instagram </span></a></li>
+        <li><a href="https://www.facebook.com/sagar chaudhari/" target="_blank"><i
+              class="fa-brands fa-facebook"></i><span>Facebook</span> </a></li>
+        <li><a href="https://www.linkedin.com/in/sagar-chaudhari-374473244" target="_blank"><i
+              class="fa-brands fa-linkedin"></i><span>Linkedin</span></a></li>
+        <li><a href="https://www.youtube.com/channel/UCQhUXWtYopfp0UIJl19BHKQ" target="_blank"><i
+              class="fa-brands fa-youtube"></i><span>You Tube</span></a></li>
+
+      </ul>
+    </div>
+    <div class="section">
+      <div class="subtitle">
+        <h4>CONTACT US</h4>
+      </div>
+      <ul>
+        <li><a href="mailto:sagarchaudhari7172@gmail.com"><i
+              class="fa-solid fa-envelope"></i>sagarchaudhari7172@gmail.com</a></li>
+        <li><a href="tel:+918000407813"><i class="fa-solid fa-phone"></i> +91 8000407813</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="copyright">
+    <hr style="opacity: .1;">
+    &nbsp;
+    <p><b><a href="mailto:sagarchaudhari7172@gmail.com" style="color:#333;text-decoration:none; ">&copy; Sagar Chaudhari
+          2022 All Rights Are Reserved.</b></p>
+  </div>
+  <!-- Option 1: Bootstrap Bundle with Popper -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa"
+    crossorigin="anonymous"></script>
+</body>
+
+</html>

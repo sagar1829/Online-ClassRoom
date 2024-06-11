@@ -1,0 +1,157 @@
+{% extends 'classroom/base.html' %}
+{% load static %}
+
+{% block page %}
+Home
+{% endblock page %}
+
+{% block content %}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-3 left-col">
+            {% for std in student %}
+            <h5 style="color:#40514E;font-size: 16px;">Hello, {{std.name}}</h5>
+            <!-- <hr style="margin-top:0px"> -->
+
+            {% if user.is_authenticated %}
+            <ul class="side-links">
+                <a href="{% url 'classroom:teachers_list' %}">
+                    <li> <i class="fa-solid fa-graduation-cap"></i>Teacher list</li>
+                </a>
+                <a href="{% url 'classroom:class_assignment' %}">
+                    <li> <i class="fa-solid fa-list-check"></i>Assignment</li>
+                </a>
+                <a href="{% url 'classroom:all_marks_list' pk=user.pk %}">
+                    <li> <i class="fa-solid fa-marker"></i>Marks</li>
+                </a>
+                <a href="{% url 'classroom:class_notice' pk=user.pk %}">
+                    <li> <i class="fa-solid fa-bell"></i>Notice</li>
+                </a>
+            </ul>
+            {% endif %}
+            <div class="buttom">
+                <ul class="side-links side-links-profile">
+                    <a href="{% url 'classroom:student_detail' pk=user.pk %}">
+                        <li> <i class="fa-solid fa-user"></i>Profile</li>
+                    </a>
+                    <a href="{% url 'classroom:change_password' %}">
+                        <li>
+                            <i class="fa-solid fa-lock"></i>Change Password
+                        </li>
+                    </a>
+                </ul>
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- middle page -->
+        <div class="col-lg-6 py-5" style="margin:auto;">
+            <div class="row middle-class-page py-3">
+                <div class="col-lg-12  ">
+                    <div>
+                        {% if std.student_assignment.count == 0 %}
+                        <div class="class_right_col">
+                            <h5>No assignments Yet</h5>
+                        </div>
+                        {% else %}
+
+                        {% for assignment in std.student_assignment.all %}
+                        <div class="row class-cart">
+                            <div class="col-lg-12 d-flex">
+                                <div class="avatar avatar-p">
+                                    {% if assignment.teacher.teacher_profile_pic %}
+                                    <img src="{{ assignment.teacher.teacher_profile_pic.url }}" alt="">
+                                    {% else %}
+                                    <img src="{% static 'images/avatar.jpg'  %}" alt="">
+                                    {% endif %}
+                                </div>
+                                <div style="margin:0px 20px">
+                                    <span style="color:#333;font-weight:700;">{{ assignment.teacher }} <span
+                                            style="color:#666;font-size: 14px;font-weight: 400;">| {{assignment.ass_sub}}</span></span>
+                                    <div style="text-transform: uppercase;color:#777;font-size:12px;">
+                                        {{assignment.created_at }}</div>
+                                </div>
+
+                            </div>
+                            <div class="col-lg-12">
+                                <h5 style="font-size:16px;color:#555;margin-top:15px;">Assignment | <small
+                                        style="color:#666;">Due Date : {{assignment.due_date}} </small></h5>
+
+                                <div style="font-size:16px;color:#666;margin-top: -5px;">{{ assignment.assignment_name }}</div>
+
+                                <small style="color:#666;">Points: {{assignment.maxMark}}</small>
+                            </div>
+
+                            <div class="col-lg-12 my-3">
+                                <a href="{{ assignment.assignment.url }}" class="btn btn-success"
+                                    target="_blank">Download</a>
+
+                                {% if assignment in assignment_list %}
+                                <span style="color:#666;font-style:italic;margin-left:10px;">Submitted</span>
+                                {% else %}
+                                <td><a href="{% url 'classroom:submit_assignment' id=assignment.id %}"
+                                        class="btn btn-warning">Submit</a></td>
+                                {% endif %}
+                            </div>
+                        </div>
+                        {% endfor %}
+                        {% endif %}
+                    </div>
+                  
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- right page -->
+    <div class="col-lg-3 right-col">
+        <h5 style="color:#40514E;font-size: 16px;"><i class="fa-solid fa-bell"></i> Class Notice</h5>
+        <hr style="margin-top:0px">
+        <div class="class_right_col" style="overflow-y:scroll; overflow-x:hidden; height: 80vh;">
+
+            {% if std_notice.class_notice.count == 0 %}
+            <h5>No Notice Yet.</h5>
+            {% else %}
+            <div>
+                {% for notice in std_notice.class_notice.all %}
+                <div class="notice mb-2">
+                    <div class="row">
+                        <div class="col-lg-12 d-flex">
+                            <div class="avatar avatar-p">
+                                {% if notice.teacher.teacher_profile_pic %}
+                                <img src="{{ notice.teacher.teacher_profile_pic.url }}" class="notice-img">
+                                {% else %}
+                                <img src="{% static 'images/avatar.jpg' %}" class="notice-img">
+                                {% endif %}
+                            </div>
+                            <div class="avatar-info" style="margin:0px 20px">
+
+                                <div style="color:#333;font-weight:700;">{{ notice.teacher.name }} <span
+                                        style="color:#666;font-size: 14px;font-weight: 400;"> |
+                                        {{notice.teacher.subject_name }}</span></div>
+                                <div style="text-transform: uppercase;color:#777;font-size:12px;">
+                                    {{notice.created_at }}</div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="message">
+                                <p style="margin-top: 8px;">{{ notice.message }}</p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

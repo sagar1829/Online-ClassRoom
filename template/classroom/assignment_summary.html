@@ -1,0 +1,81 @@
+{% extends 'classroom/base.html' %}
+{% block content %}
+<div class="container mt-5 pt-5">
+    
+    <small>ASSINMENT GRADE</small> <hr>
+    <div class="row">
+        <div class="col"><p>{{ass_details}}</p></div>
+        <div class="col"></div>
+    </div>     
+    {% if submited_ass %}
+   
+    <ol class="list-group"> 
+        {% for i in submited_ass %}
+
+        <li class="list-group-item">
+            <div class="row">
+                <div class="col"> 
+                    <h5>{{i.student}}</h5>
+                    <small>{{i.student.email}}</small>
+                </div>
+
+                <div class="col" style="display:flex;align-items:center;"> 
+                    <a href="{{ i.submit.url }}" class="btn btn-outline-dark" traget="_blank" >view assignment</a>
+                </div>
+                <div class="col"> 
+                   <small style="color:#777;font-size:12px;"> {{i.created_at}}</small style="color:#777;font-size:12px;">
+
+                  
+                    {% if i.is_marked %}
+                        <p> <b style="color:#274472;"> {{i.temp_marks}} </b> / {{i.submitted_assignment.maxMark}}</p> 
+                    {% else %}
+                    
+                    <form action="{% url 'classroom:add_marks' %}" method="post" >
+                        {% csrf_token %}
+                        <input type="hidden" name="assignment_name" value="{{i.submitted_assignment.ass_sub}}">
+                        <input type="hidden" name="studentobj" value="{{i.student.email}}">
+                        <input type="hidden" name="teacherobj" value="{{i.teacher}}">
+                        <input type="hidden" name="submisstionid" value="{{i.id}}">
+                        <input type="hidden" name="returnid" value="{{i.submitted_assignment.id}}">
+                        <input type="hidden" name="maxmarks" value="{{i.submitted_assignment.maxMark}}">
+                       <span id="inputspan"> <input  required type="text" name="obtainmarks" maxlength="3" class="marksbox"> /</span><span class="maxmarks" style="cursor:text;"> {{i.submitted_assignment.maxMark}}</span>
+                       <input type="submit" class="btn btn-dark" style="margin-left: 100px;" value="submit" style="margin-top: 7px;">
+                    </form>
+                    {% endif %}
+                    
+                </div>
+
+                <div class="col">
+
+                </div>
+            </div>
+        </li>
+
+        {% endfor %}
+       
+    </ol>
+   
+    {% else %}
+        <p>No submisstion yet</p>
+    {% endif %}
+</div>
+    
+<script>
+
+    // document.getElementById('inputspan');
+    // const maxMark = document.querySelector('.maxmarks');
+
+    // for (let i = 0; i < maxMark.length; i++) {
+    //     const txtElement = document.createElement("div");
+    //     txtElement.textContent = maxMark[i];
+
+    //     txtElement.addEventListener('click',function(){
+    //     console.log("hello")
+    // }); 
+
+    // maxMark.appendChild(txtElement);
+        
+    // }
+
+</script>
+{% endblock content %}

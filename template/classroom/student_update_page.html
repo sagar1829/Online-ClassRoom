@@ -1,0 +1,27 @@
+{% extends "classroom/base.html" %}
+{% load bootstrap4 %}
+{% block content %}
+<br><br><br>
+<div class="container">
+  <div class="jumbotron">
+    {% if profile_updated %}
+    <h4>Your profile is updated successfully.</h4>
+    {% else %}
+    <div class="form-bx" style="margin:auto;width:500px">
+
+
+      <h4>Update Profile</h4>
+      <hr>
+      <form enctype="multipart/form-data" method="post">
+        {% csrf_token %}
+        {% bootstrap_form form %}
+        <br><br>
+        <input class="btn btn-primary btn-x" type="submit" name="" value="Submit">
+      </form>
+    </div>
+    {% endif %}
+  </div>
+</div>
+
+
+{% endblock %}

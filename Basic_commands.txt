@@ -1,0 +1,8 @@
+To Run project on Server  :   Python manage.py runserver 
+
+Activate Virtual Environment :  venv\Scripts\Activate
+
+To check all packages : pip freeze
+
+
+

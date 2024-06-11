@@ -1,0 +1,54 @@
+{% extends 'classroom/base.html' %}
+{% load static %}
+{% block content %}
+
+<br><br><br><br>
+<div class="container" style="overflow-y:scroll ;">
+    <div class="col-lg-3 class_notice_css">
+        <h5 style="color:#40514E;font-size: 16px;"><i class="fa-solid fa-bell"></i> Class Notice</h5>
+        <hr style="margin-top:0px">
+        <div class="class_right_col">
+
+            {% if student.class_notice.count == 0 %}
+            <h5>No Notice Yet.</h5>
+            {% else %}
+
+            {% for notice in student.class_notice.all %}
+            <div class="notice mb-2">
+                <div class="row">
+                    <div class="col-lg-12 d-flex">
+                        <div class="avatar avatar-p">
+                            {% if notice.teacher.teacher_profile_pic %}
+                            <img src="{{ notice.teacher.teacher_profile_pic.url }}" class="notice-img">
+                            {% else %}
+                            <img src="{% static 'images/avatar.jpg' %}" class="notice-img">
+                            {% endif %}
+                        </div>
+                        <div class="avatar-info" style="margin:0px 20px">
+                            <div style="color:#333;font-weight:700;">{{ notice.teacher.name }} <span
+                                    style="color:#666;font-size: 14px;font-weight: 400;"> |
+                                    {{notice.teacher.subject_name }}</span></div>
+                            <div style="text-transform: uppercase;color:#777;font-size:12px;">{{ notice.created_at }}
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="message">
+                            <p style="margin-top: 8px;">{{ notice.message }}</p>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+
+
+    {% endblock %}

@@ -1,0 +1,57 @@
+{% extends 'classroom/base.html' %}
+{% load static %}
+{% block content %}
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12 class_notice_css"
+            style="position:fixed; width:80%;top:50px;height: 80vh; left:50%;right:50%;transform:translateX(-50%)">
+            <h5 style="color:#40514E;font-size: 16px;"><i class="fa-solid fa-bell"></i> Inbox</h5>
+            <hr style="margin-top:0px">
+
+            <div class="class_right_col" style="height:70vh;overflow-y:scroll;overflow-x: hidden;">
+
+                {% if teacher.messages.count == 0 %}
+                <h5>No Notice Yet.</h5>
+                {% else %}
+
+                {% for mssg in teacher.messages.all %}
+                <div class="notice mb-2">
+                    <div class="row">
+                        <div class="col-lg-12 d-flex">
+                            <div class="avatar avatar-p">
+                                {% if mssg.student.student_profile_pic %}
+                                <img src="{{ mssg.student.student_profile_pic.url }}" class="notice-img">
+                                {% else %}
+                                <img src="{% static 'images/avatar.jpg' %}" class="notice-img">
+                                {% endif %}
+                            </div>
+                            <div class="avatar-info" style="margin:0px 20px">
+                                <div style="color:#333;font-weight:700;">{{ mssg.student.name }} <span
+                                        style="color:#666;font-size: 14px;font-weight: 400;"> |
+                                        {{notice.teacher.subject_name }}</span></div>
+                                <div style="text-transform: uppercase;color:#777;font-size:12px;">{{ mssg.created_at }}
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="message">
+                                <p style="margin-top: 8px;">{{ mssg.message }}</p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

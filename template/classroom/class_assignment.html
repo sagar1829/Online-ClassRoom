@@ -1,0 +1,132 @@
+{% extends 'classroom/base.html' %}
+{% load static %}
+{% block content %}
+
+<div class="container-fluid mt-5">
+  <div class="row">
+    <div class="col-3" style="position:relative;">
+      <div class="class_notice_css" style="position:fixed; left:20px;top:45px; width:330px;">
+        <div>
+          <h6>{{student.name}}</h6>
+          <div>
+            <p style="flex:6">{{student.std_course}} | <b>sem {{student.sem}}</b> </p>
+          </div>
+
+        </div>
+        <hr class="py-1">
+
+        <div style="height:80vh;overflow-y: scroll;">
+          <div class="accordion accordion-flush" id="accordionFlushExample">
+
+            {% if subject %}
+            {% for i in subject %}
+
+            <!-- flush -->
+            <div class="accordion-item outer-content-bx" style="outline:0;">
+              <h2 class="accordion-header" id="flush-headingOne">
+                <button class="accordion-button collapsed  content-bx" type="button" data-bs-toggle="collapse"
+                  data-bs-target="#panelsStayOpen-{{ forloop.counter }}" aria-expanded="false"
+                  aria-controls="flush-collapseOne">
+                  <div class="left">{{i.subject_name}}</div>
+                  <div class="right">
+                    <span>7 </span>
+                  </div>
+                </button>
+              </h2>
+              <div id="panelsStayOpen-{{ forloop.counter }}" class="accordion-collapse collapse"
+                aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                <div class="accordion-body">
+                  <ul>
+                    <li>
+                      <a href="#">Completed Assignment</a>
+                    </li>
+                    <li>
+                      <a href="#">Missing Assignment</a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <!-- flushend -->
+
+            {% endfor %}
+            {% else %}
+            <p>no subject</p>
+            {% endif %}
+          </div>
+        </div>
+
+
+
+      </div>
+    </div>
+
+
+    <div class="col-9">
+      <div class="container">
+        <div class="class_notice_css ">
+          <h5 style="color:#40514E;font-size: 16px;"><i class="fa-solid fa-list-check"></i> Class Assignments</h5>
+          <hr style="margin-top:0px">
+          <div class="row middle-class-page ">
+            <div class="col-lg-12  ">
+              <div>
+                {% if student.student_assignment.count == 0 %}
+                <div class="class_right_col">
+                  <h5>No assignments Yet</h5>
+                </div>
+                {% else %}
+
+                {% for assignment in student.student_assignment.all %}
+                <div class="row class-cart">
+                  <div class="col-lg-12 d-flex">
+                    <div class="avatar avatar-p">
+                      {% if assignment.teacher.teacher_profile_pic %}
+                      <img src="{{ assignment.teacher.teacher_profile_pic.url }}" alt="">
+                      {% else %}
+                      <img src="{% static 'images/avatar.jpg' %}" class="notice-img">
+                      {% endif %}
+                    </div>
+                    <div style="margin:0px 20px">
+                      <span style="color:#333;font-weight:700;">{{ assignment.teacher }} <span
+                          style="color:#666;font-size: 14px;font-weight: 400;">|
+                          {{assignment.teacher.subject_name}}</span></span>
+                      <div style="text-transform: uppercase;color:#777;font-size:12px;">{{ assignment.created_at }}
+                      </div>
+                    </div>
+
+                  </div>
+                  <div class="col-lg-12">
+                    <h5 style="font-size:16px;color:#555;margin-top:15px;">Assignment | <small style="color:#666;">Due
+                        Date : {{assignment.due_date}} </small></h5>
+                    <div style="font-size:16px;color:#666;margin-top: -5px;">{{ assignment.assignment_name }}</div>
+                    <small style="color:#666;">Points: {{assignment.maxMark}}</small>
+                  </div>
+
+                  <div class="col-lg-12 my-3">
+                    <a href="{{ assignment.assignment.url }}" class="btn btn-success" target="_blank">Download</a>
+
+                    {% if assignment in assignment_list %}
+                    <span style="color:#666;font-style:italic;margin-left:10px;">Submitted</span>
+                    {% else %}
+                    <td><a href="{% url 'classroom:submit_assignment' id=assignment.id %}"
+                        class="btn btn-warning">Submit</a>
+                    </td>
+                    {% endif %}
+                  </div>
+
+                </div>
+                {% endfor %}
+                {% endif %}
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+{% endblock %}
